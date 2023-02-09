@@ -1,4 +1,9 @@
-let valueOfTop = document.getElementById("top");
+let sqrt_temp = 0;
+let pow_temp = 0;
+let state = "";
+let percent_temp = 0;
+let screanNum = document.getElementById("top");
+
 const one = document.getElementById("one");
 const two = document.getElementById("two");
 const thre = document.getElementById("thre");
@@ -9,6 +14,8 @@ const seven = document.getElementById("seven");
 const eight = document.getElementById("eight");
 const nine = document.getElementById("nine");
 const zero = document.getElementById("zero");
+const zerodbl = document.getElementById("zerodbl");
+const zerotrp = document.getElementById("zerotrp");
 
 const plus = document.getElementById("plus");
 const minus = document.getElementById("minus");
@@ -20,6 +27,8 @@ const sqrt = document.getElementById("sqrt");
 
 const equals = document.getElementById("equals");
 const ce = document.getElementById("ce");
+const percent = document.getElementById("percent");
+const dot = document.getElementById("dot");
 //
 //
 one.addEventListener("click", addone);
@@ -32,6 +41,8 @@ seven.addEventListener("click", addseven);
 eight.addEventListener("click", addeight);
 nine.addEventListener("click", addnine);
 zero.addEventListener("click", addzero);
+zerodbl.addEventListener("click", addzerodbl);
+zerotrp.addEventListener("click", addzerotrp);
 
 plus.addEventListener("click", add);
 minus.addEventListener("click", remove);
@@ -43,83 +54,160 @@ ce.addEventListener("click", resetnumber);
 
 power.addEventListener("click", powernumber);
 sqrt.addEventListener("click", sqrtnumber);
+percent.addEventListener("click", percentnum);
+dot.addEventListener("click", adddot);
 //
 //
 function addone() {
-  valueOfTop.innerText += "1";
+  screanNum.innerText += "1";
 }
 function addtwo() {
-  valueOfTop.innerText += "2";
+  screanNum.innerText += "2";
 }
 function addthre() {
-  valueOfTop.innerText += "3";
+  screanNum.innerText += "3";
 }
 function addfour() {
-  valueOfTop.innerText += "4";
+  screanNum.innerText += "4";
 }
 function addfive() {
-  valueOfTop.innerText += "5";
+  screanNum.innerText += "5";
 }
 function addsix() {
-  valueOfTop.innerText += "6";
+  screanNum.innerText += "6";
 }
 function addseven() {
-  valueOfTop.innerText += "7";
+  screanNum.innerText += "7";
 }
 function addeight() {
-  valueOfTop.innerText += "8";
+  screanNum.innerText += "8";
 }
 function addnine() {
-  valueOfTop.innerText += "9";
+  screanNum.innerText += "9";
 }
 function addzero() {
-  valueOfTop.innerText += "0";
+  screanNum.innerText += "0";
+}
+function addzerodbl() {
+  screanNum.innerText += "00";
+}
+function addzerotrp() {
+  screanNum.innerText += "000";
 }
 
 function add() {
-  valueOfTop.innerText += "+";
+  screanNum.innerText += "+";
 }
 function remove() {
-  valueOfTop.innerText += "-";
+  screanNum.innerText += "-";
 }
 function multiplynumber() {
-  valueOfTop.innerText += "*";
+  screanNum.innerText += "*";
 }
 function devidenumber() {
-  valueOfTop.innerText += "/";
+  screanNum.innerText += "/";
 }
-
+function adddot() {
+  screanNum.innerText += ".";
+}
 function equalsnumber() {
   try {
-    valueOfTop.innerText = eval(valueOfTop.innerText);
-  } catch (err) {
-    errors()
-  }
-}
-
-function resetnumber() {
-  valueOfTop.innerText = "";
-}
-function powernumber() {
-  try {
-    valueOfTop.innerText = Math.pow(eval(valueOfTop.innerText), 2);
-  } catch (err) {
-    errors()
-  }
-}
-function sqrtnumber() {
-  try {
-    valueOfTop.innerText = Math.sqrt(eval(valueOfTop.innerText), 2);
-    if (valueOfTop.innerText == "NaN") {
-      valueOfTop.innerText = "";
-      console.log("not a number");
+    if (state == "") {
+      screanNum.innerText = eval(screanNum.innerText);
+      notnum();
+      infinyty();
+      return 0;
+    }
+    switch (state) {
+      case "percent":
+        calcpercent();
+        break;
+      case "pow":
+        calcpow();
+        break;
+      case "sqrt":
+        calcsqrt();
+        break;
     }
   } catch (err) {
     errors();
   }
 }
+
+function resetnumber() {
+  screanNum.innerText = "";
+}
+
+function calcpercent() {
+  try {
+    screanNum.innerText = (percent_temp * eval(screanNum.innerText)) / 100;
+    state = "";
+    notnum();
+    infinyty();
+  } catch (err) {
+    errors();
+  }
+}
+function percentnum() {
+  try {
+    percent_temp = eval(screanNum.innerText);
+    screanNum.innerText = "";
+    state = "percent";
+    notnum();
+    infinyty();
+  } catch (err) {
+    errors();
+  }
+}
+function calcpow() {
+  try {
+    screanNum.innerText = Math.pow(eval(pow_temp), eval(screanNum.innerText));
+    state = "";
+    notnum();
+    infinyty();
+  } catch (err) {
+    state = "";
+    errors();
+  }
+}
+function powernumber() {
+  try {
+    pow_temp = eval(screanNum.innerText);
+    screanNum.innerText = "";
+    state = "pow";
+    notnum();
+    infinyty();
+  } catch (err) {
+    state = "";
+    errors();
+  }
+}
+function sqrtnumber() {
+  try {
+    screanNum.innerText = Math.sqrt(eval(screanNum.innerText));
+    notnum();
+    infinyty();
+  } catch (err) {
+    errors();
+  }
+}
+
 function errors() {
   console.log("Bad syntax");
-  valueOfTop.innerText = "";
-  alert("syntax error\ntext box was reseted")
+  screanNum.innerText = "";
+  alert("syntax error\ntext box was reseted");
+}
+function notnum() {
+  if (screanNum.innerText == "NaN") {
+    console.log("not a number");
+    screanNum.innerText = "";
+    alert("Not a number\ntext box was reseted");
+  }
+}
+function infinyty() {
+  if (screanNum.innerText == "Infinity") {
+    console.log("infinity");
+    screanNum.innerText = "";
+    alert("number was infinity\ntext box was reseted");
+  }
 }
