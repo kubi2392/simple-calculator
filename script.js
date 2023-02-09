@@ -93,8 +93,7 @@ function equalsnumber() {
   try {
     valueOfTop.innerText = eval(valueOfTop.innerText);
   } catch (err) {
-    console.log("rrreeeee");
-    valueOfTop.innerText = "";
+    errors()
   }
 }
 
@@ -105,15 +104,22 @@ function powernumber() {
   try {
     valueOfTop.innerText = Math.pow(eval(valueOfTop.innerText), 2);
   } catch (err) {
-    console.log("rrreeeee");
-    valueOfTop.innerText = "";
+    errors()
   }
 }
 function sqrtnumber() {
   try {
     valueOfTop.innerText = Math.sqrt(eval(valueOfTop.innerText), 2);
+    if (valueOfTop.innerText == "NaN") {
+      valueOfTop.innerText = "";
+      console.log("not a number");
+    }
   } catch (err) {
-    console.log("rrreeeee");
-    valueOfTop.innerText = "";
+    errors();
   }
+}
+function errors() {
+  console.log("Bad syntax");
+  valueOfTop.innerText = "";
+  alert("syntax error\ntext box was reseted")
 }
