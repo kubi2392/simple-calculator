@@ -125,9 +125,6 @@ function equalsnumber() {
       case "pow":
         calcpow();
         break;
-      case "sqrt":
-        calcsqrt();
-        break;
     }
   } catch (err) {
     errors();
